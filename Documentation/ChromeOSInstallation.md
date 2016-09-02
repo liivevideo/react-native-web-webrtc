@@ -1,3 +1,3 @@
-## Web Installation
+## ChromeOS Installation
 
 TODO:

@@ -17,7 +17,8 @@ A WebRTC module for React Native Web.
 
 ## Usage
 Now, you can use WebRTC like in browser.
-In your `index.web.js`/`index.chromeos.js`, you can require WebRTC to import RTCPeerConnection, RTCSessionDescription, etc.
+In your `index.web.js`/`index.chromeos.js`
+
 ```javascript
 var WebRTC = require('react-native-web-webrtc');
 var {
@@ -38,3 +39,8 @@ The demo project is comming.
 * Example project
 * ChromeOS support
 * Video Tag migrated from liivevideo/react-native-web
+* Documentation of implementation
+
+## Sister Projects:
+
+This is a sister project to: [react-native-webrtc](https://github.com/oney/react-native-webrtc) and [react-native-web](git://github.com/necolas/react-native-web.git)
