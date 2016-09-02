@@ -1,0 +1,23 @@
+language: node_js
+
+node_js:
+   - "6.2.2"
+
+deploy:
+  provider: npm
+  api_key: $NPM_KEY
+  on:
+    tags: true
+    branch: master
+  skip_cleanup: true
+
+integrations:
+  notifications:
+    slack: $SLACK_CI_CHANNEL
+    branches:
+      only:
+        - master
+        - develop
+      on_success: change
+      on_failure: always
+      on_start: never
