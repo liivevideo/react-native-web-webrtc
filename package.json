@@ -1,7 +1,7 @@
 {
   "name": "react-native-web-webrtc",
   "description": "A sister project to react-native-web and react-native-webrtc that allows webrtc to be used with react-native-web projects.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liivevideo/react-native-web-webrtc.git"
@@ -24,7 +24,7 @@
     "webrtc"
   ],
   "dependencies": {
-
+    "react-native-web": "0.0.44"
   },
   "bugs": {
     "url": "https://github.com/liivevideo/react-native-web-webrtc/issues"
