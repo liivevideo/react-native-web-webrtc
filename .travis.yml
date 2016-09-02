@@ -13,8 +13,8 @@ deploy:
   skip_cleanup: true
 
 notifications:
-  slack: liiveteam:[$SLACK_KEY]
 
+  slack: liiveteam:Aj7V8m8n5p2GGf3F4cHTiv3W
   branches:
     only:
       - master
