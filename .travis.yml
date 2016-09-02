@@ -14,7 +14,8 @@ deploy:
 
 integrations:
   notifications:
-    slack: $SLACK_CI_CHANNEL
+    slack: $SLACK_KEY
+
     branches:
       only:
         - master
