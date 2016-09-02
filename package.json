@@ -6,6 +6,9 @@
     "type": "git",
     "url": "git+https://github.com/liivevideo/react-native-web-webrtc.git"
   },
+  "scripts": {
+    "test": "echo 'no tests'"
+  },
   "nativePackage": false,
   "author": {
     "name": "Robb",
