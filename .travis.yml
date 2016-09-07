@@ -12,13 +12,13 @@ deploy:
     branch: master
   skip_cleanup: true
 
-integrations:
-  notifications:
-    slack: $SLACK_CI_CHANNEL
-    branches:
-      only:
-        - master
-        - develop
-      on_success: change
-      on_failure: always
-      on_start: never
+notifications:
+
+  slack: liiveteam:Aj7V8m8n5p2GGf3F4cHTiv3W
+  branches:
+    only:
+      - master
+      - develop
+    on_success: change
+    on_failure: always
+    on_start: never

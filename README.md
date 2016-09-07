@@ -2,6 +2,8 @@
 
 A WebRTC module for React Native Web.
 
+[![Build Status](https://travis-ci.org/liivevideo/react-native-web-webrtc.svg?branch=master)](https://travis-ci.org/liivevideo/react-native-web-webrtc)
+
 ## Support
 - Supports browsers and chromeOS.  
 - Support video and audio communication.  
