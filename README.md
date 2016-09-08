@@ -19,7 +19,8 @@ A WebRTC module for React Native Web.
 
 ## Usage
 Now, you can use WebRTC using react-native in a browser or chromeOS.
-In your `index.web.js`/`index.chromeos.js`
+
+In your `index.web.js`/`index.chromeos.js` file:
 
 ```javascript
 var WebRTC = require('react-native-web-webrtc');
