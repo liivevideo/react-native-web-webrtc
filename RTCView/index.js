@@ -1,6 +1,7 @@
 /* global window */
 
 import resolveAssetSource from './resolveAssetSource';
+import RTCViewResizeMode from './RTCViewResizeMode';
 
 import {
     createDOMElement,
