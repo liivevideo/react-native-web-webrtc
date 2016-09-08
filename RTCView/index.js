@@ -1,10 +1,10 @@
 /* global window */
 
-import RTCViewResizeMode from './RTCViewResizeMode';
 import resolveAssetSource from './resolveAssetSource';
-import createDOMElement from './createDOMElement';
+import RTCViewResizeMode from './RTCViewResizeMode';
 
 import {
+    createDOMElement,
     StyleSheet,
     View
 } from 'react-native-web'
@@ -39,7 +39,6 @@ class RTCView extends Component {
         onLoad: PropTypes.func,
         onLoadEnd: PropTypes.func,
         onLoadStart: PropTypes.func,
-        resizeMode: PropTypes.oneOf([ 'center', 'contain', 'cover', 'none', 'repeat', 'stretch' ]),
         source: RTCViewSourcePropType,
     };
 
