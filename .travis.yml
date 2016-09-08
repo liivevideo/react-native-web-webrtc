@@ -18,7 +18,7 @@ deploy:
   api_key: $NPM_KEY
   email: "robblovell@gmail.com"
   on:
-    tags: false
+    tags: true
     branch: master
   skip_cleanup: true
   clean_up: false
