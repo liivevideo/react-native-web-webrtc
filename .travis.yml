@@ -1,26 +1,39 @@
 language: node_js
-
 node_js:
-  - "6.2.2"
-
-deploy:
-  provider: npm
-  api_key: $NPM_KEY
-  email: "robblovell@gmail.com"
-  on:
-    tags: false
-    branch: master
-  skip_cleanup: true
-
-after_success:
-  - npm run ci-publish || true
-
+- 6.2.2
+#after_success:
+#  - echo -e "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL" | npm login
+#  - npm run 2npm
+after_script:
+- git describe --tags --exact-match 2>/dev/null
+- echo $?
 notifications:
   slack: liiveteam:Aj7V8m8n5p2GGf3F4cHTiv3W
   branches:
     only:
-      - master
-      - develop
+    - master
+    - develop
     on_success: change
     on_failure: always
     on_start: never
+deploy:
+  provider: npm
+  email: robblovell@gmail.com
+  api_key:
+    secure: HZA0sajdVfbvbgOVZ80BJbvOXPl21RrghBd7ByZTSgdEFE8v8PIA87RUPuNQk7DjgTq4K4WKZzr9XvNOVfzU7tSIg9K70JmjYJraV7+Dp3tUaDw3oGr1OvsO6IIRBVD3UpASjdInSGUFyTdTVT5w3l143u1BYcRuRe84NNof4FwkwNIpVOOEOjwcD0WNfs88wCD6XvNalo5EBFBm3DKJyjMpvHOIHdYhd5sX2d1J81FzKYBNopCfafzo+slekgUSZ/xYj19F4pO19/3ClnviRo/XS/VngxhVh68Jt3ljfqwb+jvMDwbbg8/whTNdKJzMsX8f1hJe7kUrEUjBaG4pDMTlnDZpE3U5rrSs6wfePYfzq6eY0XhvtoX/QpVxY5go6EKIC/H8gu/rt7h84ybIpvj3e7Llli69OaTQSbTF3eRJPNedD7UrTh7Tv94JSqoNVDzu4wGZUK6vq+G2/JtLGgCfEfIGxdXg8vqub1S1t0I65gejUGUAE+c0zGE/+7sltDvlK87JYjmY/DSYsTs61FGoPTn4jGPN8IQ0dR6yPfIANUv2M0cJ/EFjWYSpS4r9cdDGX4QI6qnL05aXCt7iCu99y+IJzGzSy/ZmpSDAT/+n47H1fTbs818nI10OCHYQnA2SANS4BBiWFj8aYxQH/zXPDqqM2oo2oSeh/alPAbE=
+  clean_up: false
+  on:
+    tags: true
+    repo: liivevideo/react-native-web-webrtc
+    branch: master
+
+#deploy:
+#  provider: npm
+#  api_key: $NPM_KEY
+#  email: "robblovell@gmail.com"
+#  on:
+#    tags: false
+#    branch: master
+#  skip_cleanup: true
+#  clean_up: false
+#  repo: robblovell/react-native-web-webrtc

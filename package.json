@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo 'no tests'",
-    "ci-publish": "ci-publish"
+    "2npm": "publish"
   },
   "nativePackage": false,
   "author": {
@@ -29,7 +29,7 @@
     "react-native-web": "0.0.44"
   },
   "devDependencies": {
-    "ci-publish": "^1.3.0"
+    "publish": "^0.6.0"
   },
   "bugs": {
     "url": "https://github.com/liivevideo/react-native-web-webrtc/issues"
