@@ -2,10 +2,12 @@
 
 import RTCViewResizeMode from './RTCViewResizeMode';
 import resolveAssetSource from './resolveAssetSource';
-import ReactNativeWeb from 'react-native-web';
-var View = ReactNativeWeb.View;
-var createDOMElement = ReactNativeWeb.createDOMElement;
-var StyleSheet = ReactNativeWeb.StyleSheet;
+import createDOMElement from './createDOMElement';
+
+import {
+    StyleSheet,
+    View
+} from 'react-native-web'
 
 import React, { Component, PropTypes } from 'react';
 
