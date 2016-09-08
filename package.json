@@ -7,7 +7,8 @@
     "url": "git+https://github.com/liivevideo/react-native-web-webrtc.git"
   },
   "scripts": {
-    "test": "echo 'no tests'"
+    "test": "echo 'no tests'",
+    "ci-publish": "ci-publish"
   },
   "nativePackage": false,
   "author": {
@@ -26,6 +27,9 @@
   ],
   "dependencies": {
     "react-native-web": "0.0.44"
+  },
+  "devDependencies": {
+    "ci-publish": "^1.3.0"
   },
   "bugs": {
     "url": "https://github.com/liivevideo/react-native-web-webrtc/issues"

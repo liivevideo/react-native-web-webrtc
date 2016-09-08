@@ -1,7 +1,7 @@
 language: node_js
 
 node_js:
-   - "6.2.2"
+  - "6.2.2"
 
 deploy:
   provider: npm
@@ -12,8 +12,10 @@ deploy:
     branch: master
   skip_cleanup: true
 
-notifications:
+after_success:
+  - npm run ci-publish || true
 
+notifications:
   slack: liiveteam:Aj7V8m8n5p2GGf3F4cHTiv3W
   branches:
     only:
