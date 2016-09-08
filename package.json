@@ -19,8 +19,9 @@
     "react-component",
     "react-native",
     "react-native-web",
-    "ios",
-    "android",
+    "chromeOS",
+    "browsers",
+    "web",
     "webrtc"
   ],
   "dependencies": {

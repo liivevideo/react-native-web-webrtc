@@ -18,7 +18,7 @@ A WebRTC module for React Native Web.
 - [ChromeOS](https://github.com/liivevideo/react-native-web-webrtc/blob/master/Documentation/ChromeOSInstallation.md)
 
 ## Usage
-Now, you can use WebRTC like in browser.
+Now, you can use WebRTC using react-native in a browser or chromeOS.
 In your `index.web.js`/`index.chromeos.js`
 
 ```javascript
@@ -30,18 +30,15 @@ var {
   RTCSessionDescription,
   MediaStreamTrack,
   getUserMedia,
+  RTCView
 } = WebRTC;
 ```
-
-## Demo
-The demo project is comming.
 
 ## TODO:
 
 * Example project
-* ChromeOS support
-* Video Tag migrated from liivevideo/react-native-web
 * Documentation of implementation
+* Clean up RTCView: unnecessary code.
 
 ## Sister Projects:
 

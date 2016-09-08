@@ -1,15 +1,11 @@
 /* global window */
 
 import RTCViewResizeMode from './RTCViewResizeMode';
-import RTCViewStylePropTypes from './RTCViewStylePropTypes';
 import resolveAssetSource from './resolveAssetSource';
 import ReactNativeWeb from 'react-native-web';
 var View = ReactNativeWeb.View;
-var BaseComponentPropTypes = ReactNativeWeb.BaseComponentPropTypes;
-var applyNativeMethods = ReactNativeWeb.applyNativeMethods;
 var createDOMElement = ReactNativeWeb.createDOMElement;
 var StyleSheet = ReactNativeWeb.StyleSheet;
-var StyleSheetPropType = ReactNativeWeb.StyleSheetPropType;
 
 import React, { Component, PropTypes } from 'react';
 
@@ -30,7 +26,7 @@ class RTCView extends Component {
     static displayName = 'RTCView'
 
     static propTypes = {
-        ...BaseComponentPropTypes,
+        ...View.propTypes,
         width: PropTypes.number,
         height: PropTypes.number,
         streamURL: PropTypes.string,
@@ -43,13 +39,9 @@ class RTCView extends Component {
         onLoadStart: PropTypes.func,
         resizeMode: PropTypes.oneOf([ 'center', 'contain', 'cover', 'none', 'repeat', 'stretch' ]),
         source: RTCViewSourcePropType,
-        style: StyleSheetPropType(RTCViewStylePropTypes)
     };
 
-    static defaultProps = {
-        accessible: true,
-        style: {}
-    };
+    static defaultProps = {};
 
     static resizeMode = RTCViewResizeMode;
 
@@ -161,7 +153,7 @@ class RTCView extends Component {
         this._updateRTCViewState(STATUS_ERRORED);
         this._onLoadEnd();
         if (onError) { onError(event); }
-    }
+    };
 
     _onLoad = (e) => {
         const { onLoad } = this.props;
@@ -171,7 +163,7 @@ class RTCView extends Component {
         this._updateRTCViewState(STATUS_LOADED);
         if (onLoad) { onLoad(event); }
         this._onLoadEnd();
-    }
+    };
 
     _onLoadEnd() {
         const { onLoadEnd } = this.props;
@@ -240,5 +232,5 @@ const resizeModeStyles = StyleSheet.create({
     }
 });
 
-module.exports = applyNativeMethods(RTCView);
+module.exports = RTCView;
 
