@@ -32,6 +32,8 @@ class RTCView extends Component {
         width: PropTypes.number,
         height: PropTypes.number,
         streamURL: PropTypes.string,
+        muted: PropTypes.string,
+        autoPlay: PropTypes.string,
         children: PropTypes.any,
         defaultSource: RTCViewSourcePropType,
         onError: PropTypes.func,
@@ -80,6 +82,8 @@ class RTCView extends Component {
         const { isLoaded } = this.state;
         const {
             streamURL,
+            autoPlay,
+            muted,
             accessibilityLabel,
             accessible,
             children,
@@ -105,6 +109,12 @@ class RTCView extends Component {
          * rtcVideoView context menu. Child content is rendered into an element absolutely
          * positioned over the rtcVideoView.
          */
+        var attributes = {src: streamURL}
+        if (muted != null && muted != undefined && muted)
+            attributes.muted = 'muted'
+        if (autoPlay != null && autoPlay != undefined && autoPlay)
+            attributes.autoPlay = 'autoPlay'
+
         return (
             <View
                 accessibilityLabel={accessibilityLabel}
@@ -112,14 +122,14 @@ class RTCView extends Component {
                 accessible={accessible}
                 onLayout={onLayout}
                 style={[
-          styles.initial,
-          style,
-          backgroundRTCView && { backgroundRTCView },
-          resizeModeStyles[resizeMode]
-        ]}
+                    styles.initial,
+                    style,
+                    backgroundRTCView && { backgroundRTCView },
+                    resizeModeStyles[resizeMode]
+                ]}
                 testID={testID}
             >
-                {createDOMElement('video', { autoPlay: 'autoPlay', src: streamURL })}
+                {createDOMElement('video', attributes)}
                 {children ? (
                     <View children={children} pointerEvents='box-none' style={styles.children} />
                 ) : null}
