@@ -1,15 +1,17 @@
 /* global window */
 
-import resolveAssetSource from './resolveAssetSource';
-import RTCViewResizeMode from './RTCViewResizeMode';
-
 import {
-    createDOMElement,
+    createElement,
     StyleSheet,
     View
 } from 'react-native-web'
 
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+
+import resolveAssetSource from './resolveAssetSource';
+import RTCViewResizeMode from './RTCViewResizeMode';
+
 
 const STATUS_ERRORED = 'ERRORED';
 const STATUS_LOADED = 'LOADED';
@@ -23,6 +25,7 @@ const RTCViewSourcePropType = PropTypes.oneOfType([
     }),
     PropTypes.string
 ]);
+
 
 class RTCView extends Component {
     static displayName = 'RTCView'
@@ -50,27 +53,29 @@ class RTCView extends Component {
 
     constructor(props, context) {
         super(props, context);
-        const uri = resolveAssetSource(props.source);
-        this._rtcVideoViewState = uri ? STATUS_PENDING : STATUS_IDLE;
-        this.state = { isLoaded: false };
+
+        this._uri = resolveAssetSource(props && props.source);
+        this.state = {rtcVideoViewState: this._uri ? STATUS_PENDING : STATUS_IDLE};
     }
 
     componentDidMount() {
-        if (this._rtcVideoViewState === STATUS_PENDING) {
+        if (this.state.rtcVideoViewState === STATUS_PENDING) {
             this._createRTCViewLoader();
         }
     }
 
     componentDidUpdate() {
-        if (this._rtcVideoViewState === STATUS_PENDING && !this.rtcVideoView) {
-            this._createRTCViewLoader();
-        }
+        if (this.rtcVideoView) return;
+
+        this.componentDidMount()
     }
 
     componentWillReceiveProps(nextProps) {
         const nextUri = resolveAssetSource(nextProps.source);
-        if (resolveAssetSource(this.props.source) !== nextUri) {
-            this._updateRTCViewState(nextUri ? STATUS_PENDING : STATUS_IDLE);
+
+        if (this._uri !== nextUri) {
+            this._uri = nextUri
+            this.setState({rtcVideoViewState: nextUri ? STATUS_PENDING : STATUS_IDLE});
         }
     }
 
@@ -79,11 +84,8 @@ class RTCView extends Component {
     }
 
     render() {
-        const { isLoaded } = this.state;
+        const { rtcVideoViewState } = this.state;
         const {
-            streamURL,
-            autoPlay,
-            muted,
             accessibilityLabel,
             accessible,
             children,
@@ -93,9 +95,9 @@ class RTCView extends Component {
             testID
         } = this.props;
 
-        const displayRTCView = resolveAssetSource(!isLoaded ? defaultSource : source);
+        const displayRTCView = resolveAssetSource((rtcVideoViewState === STATUS_LOADED) ? source : defaultSource);
         const backgroundRTCView = displayRTCView ? `url("${displayRTCView}")` : null;
-        let style = StyleSheet.flatten(this.props.style);
+        let style = StyleSheet.flatten(this.props.style) || {};
 
         const resizeMode = this.props.resizeMode || style.resizeMode || RTCViewResizeMode.cover;
         // remove 'resizeMode' style, as it is not supported by View (N.B. styles are frozen in dev)
@@ -109,12 +111,6 @@ class RTCView extends Component {
          * rtcVideoView context menu. Child content is rendered into an element absolutely
          * positioned over the rtcVideoView.
          */
-        var attributes = {src: streamURL}
-        if (muted != null && muted != undefined && muted)
-            attributes.muted = 'muted'
-        if (autoPlay != null && autoPlay != undefined && autoPlay)
-            attributes.autoPlay = 'autoPlay'
-
         return (
             <View
                 accessibilityLabel={accessibilityLabel}
@@ -129,7 +125,7 @@ class RTCView extends Component {
                 ]}
                 testID={testID}
             >
-                {createDOMElement('video', attributes)}
+                {this.rtcVideoView}
                 {children ? (
                     <View children={children} pointerEvents='box-none' style={styles.children} />
                 ) : null}
@@ -138,13 +134,19 @@ class RTCView extends Component {
     }
 
     _createRTCViewLoader() {
-        const uri = resolveAssetSource(this.props.source);
-
         this._destroyRTCViewLoader();
-        this.rtcVideoView = new window.RTCView();
+
+        const {streamURL, autoPlay, muted} = this.props;
+
+        var attributes = {src: streamURL}
+        if (muted) attributes.muted = true
+        if (autoPlay) attributes.autoplay = true
+
+        this.rtcVideoView = createElement('video', attributes);
         this.rtcVideoView.onerror = this._onError;
-        this.rtcVideoView.onload = this._onLoad;
-        this.rtcVideoView.src = uri;
+        this.rtcVideoView.onloadeddata = this._onLoad;
+        this.rtcVideoView.src = this._uri;
+
         this._onLoadStart();
     }
 
@@ -156,43 +158,38 @@ class RTCView extends Component {
         }
     }
 
-    _onError = (e) => {
+    _onError = (nativeEvent) => {
         const { onError } = this.props;
-        const event = { nativeEvent: e };
 
         this._destroyRTCViewLoader();
-        this._updateRTCViewState(STATUS_ERRORED);
-        this._onLoadEnd();
-        if (onError) { onError(event); }
-    };
+        this.setState({rtcVideoViewState: STATUS_ERRORED});
 
-    _onLoad = (e) => {
+        if (onError) onError({nativeEvent})
+        this._onLoadEnd();
+    }
+
+    _onLoad = (nativeEvent) => {
         const { onLoad } = this.props;
-        const event = { nativeEvent: e };
 
         this._destroyRTCViewLoader();
-        this._updateRTCViewState(STATUS_LOADED);
-        if (onLoad) { onLoad(event); }
+        this.setState({rtcVideoViewState: STATUS_LOADED});
+
+        if (onLoad) onLoad({nativeEvent})
         this._onLoadEnd();
-    };
+    }
 
     _onLoadEnd() {
         const { onLoadEnd } = this.props;
+
         if (onLoadEnd) { onLoadEnd(); }
     }
 
     _onLoadStart() {
         const { onLoadStart } = this.props;
-        this._updateRTCViewState(STATUS_LOADING);
-        if (onLoadStart) { onLoadStart(); }
-    }
 
-    _updateRTCViewState(status) {
-        this._rtcVideoViewState = status;
-        const isLoaded = this._rtcVideoViewState === STATUS_LOADED;
-        if (isLoaded !== this.state.isLoaded) {
-            this.setState({ isLoaded });
-        }
+        this.setState({rtcVideoViewState: STATUS_LOADING});
+
+        if (onLoadStart) { onLoadStart(); }
     }
 }
 
@@ -243,5 +240,5 @@ const resizeModeStyles = StyleSheet.create({
     }
 });
 
-module.exports = RTCView;
 
+module.exports = RTCView;
