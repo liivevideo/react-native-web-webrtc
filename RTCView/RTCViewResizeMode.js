@@ -1,4 +1,3 @@
-
 var keyMirror = function(obj) {
     var ret = {};
     var key;
@@ -21,5 +20,6 @@ const RTCViewResizeMode = keyMirror({
     repeat: null,
     stretch: null
 });
+
 
 module.exports = RTCViewResizeMode;

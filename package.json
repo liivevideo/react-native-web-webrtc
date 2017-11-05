@@ -1,19 +1,19 @@
 {
   "name": "react-native-web-webrtc",
   "description": "A sister project to react-native-web and react-native-webrtc that allows webrtc to be used with react-native-web projects.",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/liivevideo/react-native-web-webrtc.git"
   },
   "scripts": {
-    "test": "echo 'no tests'"
+    "test": "jest --coverage --notify"
   },
   "nativePackage": false,
-  "author": {
-    "name": "Robb",
-    "email": "robblovell@gmail.com"
-  },
+  "author": "Robb <robblovell@gmail.com>",
+  "contributors": [
+    "Jesús Leganés-Combarro 'piranna' <piranna@gmail.com>"
+  ],
   "homepage": "https://github.com/liivevideo/react-native-web-webrtc",
   "keywords": [
     "react-component",
@@ -25,9 +25,29 @@
     "webrtc"
   ],
   "dependencies": {
-    "react-native-web": "https://github.com/liivevideo/react-native-web.git"
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-native-web": "^0.1.12"
   },
   "bugs": {
     "url": "https://github.com/liivevideo/react-native-web-webrtc/issues"
+  },
+  "devDependencies": {
+    "babel-jest": "^21.2.0",
+    "babel-preset-react-native": "^4.0.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
+    "jest": "^21.2.1",
+    "jest-react-native": "^18.0.0",
+    "nock": "^9.0.27",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0"
+  },
+  "license": "MIT",
+  "jest": {
+    "collectCoverageFrom": [
+      "*.js",
+      "RTCView/**/*.js"
+    ]
   }
 }
